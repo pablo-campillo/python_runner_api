@@ -14,14 +14,18 @@ class PythonRunner:
     ) -> CodeKataSubmissionResult:
         timeit_number = 10
         with TemporaryDirectory() as tmpdirname:
+            with (Path(tmpdirname) / "__init__.py").open("w") as f:
+                f.write("")
             with (Path(tmpdirname) / "main.py").open("w") as f:
                 f.write(code_kata_submission.code)
             with (Path(tmpdirname) / "test_sample.py").open("w") as f:
-                f.write("from main import *\n\n")
+                f.write(code_kata_submission.code)
+                f.write("\n")
                 f.write("def test_sample():\n")
                 f.writelines(f"  {l}\n" for l in code_kata_submission.sample_tests.split('\n'))
             with (Path(tmpdirname) / "test_extra.py").open("w") as f:
-                f.write("from main import *\n\n")
+                f.write(code_kata_submission.code)
+                f.write("\n")
                 f.write("def test_extra():\n")
                 f.writelines(f"  {l}\n" for l in code_kata_submission.extra_tests.split('\n'))
             with (Path(tmpdirname) / "test_performance.py").open("w") as f:
