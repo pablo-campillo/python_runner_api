@@ -1,0 +1,43 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  python-runner
+
+  API for running python code with tests and memory and running time stats
+
+Globals:
+  Function:
+    Timeout: 3
+    MemorySize: 128
+
+Resources:
+  PythonRunnerFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/
+      Handler: python_runner.handler.lambda_handler
+      Runtime: python3.11
+      Architectures:
+        - x86_64
+      Events:
+        RootEndpoint:
+          Properties:
+            Method: any
+            Path: /
+          Type: Api
+        PythonRunner:
+          Type: Api
+          Properties:
+            Path: /{proxy+}
+            Method: ANY
+
+Outputs:
+  PythonRunnerApi:
+    Description: "API Gateway endpoint URL for Prod stage for Python Runner function"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/"
+  PythonRunnerFunction:
+    Description: "Python Runner Lambda Function ARN"
+    Value: !GetAtt PythonRunnerFunction.Arn
+  PythonRunnerFunctionHelloWorldFunctionIamRole:
+    Description: "Implicit IAM Role created for Python Runner function"
+    Value: !GetAtt PythonRunnerFunctionRole.Arn

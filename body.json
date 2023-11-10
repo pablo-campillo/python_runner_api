@@ -1,0 +1,6 @@
+{
+  "code":"def add(a: int, b: int):\n  result = a+b\n  return result\n",
+  "sample_tests":"assert add(2,3) == 5",
+  "extra_tests":"assert add(1,2) == 3",
+  "performance_tests":"add(1,2)"
+}

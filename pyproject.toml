@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "python_runner"
+version = "0.1.0"
+description = ""
+authors = ["Pablo Campillo <dev@pablocampillo.pro>"]
+readme = "README.md"
+packages = [{include = "python_runner", from = "src"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+uvicorn = {extras = ["standard"], version = "^0.23.2"}
+fastapi = "^0.104.0"
+pytest = "^7.4.3"
+mangum = "^0.17.0"
+
+[tool.poetry.group.dev.dependencies]
+httpx = "0.25.1"
+pytest-cov = "^4.1.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
